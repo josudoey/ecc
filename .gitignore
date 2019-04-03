@@ -1,0 +1,9 @@
+*~
+*.swp
+*.swo
+node_modules
+package-lock.json
+build
+.DS_Store
+.nyc_output/
+coverage/
