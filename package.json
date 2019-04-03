@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require intelli-espower-loader",
+    "dev:test": "nodemon --ext js --exec 'mocha $@'",
+    "cover": "nyc --reporter=lcov --reporter=text mocha --require intelli-espower-loader",
+    "dev:cover": "nodemon --ext js --exec 'nyc --reporter=lcov --reporter=text mocha --require intelli-espower-loader'"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/josudoey/ecc/issues"
   },
-  "homepage": "https://github.com/josudoey/ecc#readme"
+  "homepage": "https://github.com/josudoey/ecc#readme",
+  "devDependencies": {
+    "big.js": "^5.2.2",
+    "bignumber.js": "^8.1.1",
+    "bn.js": "^4.11.8",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0"
+  }
 }
