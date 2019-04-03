@@ -4,36 +4,45 @@ const assert = require('assert')
 const FieldElemet = require('../lib/field-element')
 describe('field element', function () {
   it('init', function () {
-    const n = FieldElemet('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141')
-    assert.strictEqual(n.num.toString(16), '0')
-    const n1 = FieldElemet('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364142')
-    assert.strictEqual(n1.num.toString(16), '1')
+    const zero = FieldElemet('0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f')
+    assert.strictEqual(zero.toString(), '0x0000000000000000000000000000000000000000000000000000000000000000')
+    const one = FieldElemet('0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc30')
+    assert.strictEqual(one.toString(), '0x0000000000000000000000000000000000000000000000000000000000000001')
 
-    const n2 = FieldElemet('-1')
-    assert.strictEqual(n2.num.toString(16), 'fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140')
+    const n1 = FieldElemet('-1')
+    assert.strictEqual(n1.toString(), '0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2e')
   })
 
   it('add', function () {
     const n2 = FieldElemet('2')
     const n3 = FieldElemet('3')
-    assert.strictEqual(n2.add(n3).num.toString(16), '5')
+    assert.strictEqual(n2.add(3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000005')
+    assert.strictEqual(n2.add(n3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000005')
   })
 
   it('mul', function () {
     const n2 = FieldElemet('2')
     const n3 = FieldElemet('3')
-    assert.strictEqual(n2.mul(n3).num.toString(16), '6')
+    assert.strictEqual(n2.mul(3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000006')
+    assert.strictEqual(n2.mul(n3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000006')
   })
 
   it('pow', function () {
     const n2 = FieldElemet('2')
     const n3 = FieldElemet('3')
-    assert.strictEqual(n2.pow(n3.num).num.toString(16), '8')
+    assert.strictEqual(n2.pow(3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000008')
+    assert.strictEqual(n2.pow(n3).toString(), '0x0000000000000000000000000000000000000000000000000000000000000008')
   })
 
   it('div', function () {
-    const n4 = FieldElemet('8')
+    const n8 = FieldElemet('8')
     const n2 = FieldElemet('2')
-    assert.strictEqual(n4.div(n2).num.toString(16), '4')
+    assert.strictEqual(n8.div(2).toString(), '0x0000000000000000000000000000000000000000000000000000000000000004')
+    assert.strictEqual(n8.div(n2).toString(), '0x0000000000000000000000000000000000000000000000000000000000000004')
+  })
+
+  it('hex', function () {
+    const n8 = FieldElemet('8')
+    assert.strictEqual(n8.toString(), '0x0000000000000000000000000000000000000000000000000000000000000008')
   })
 })
