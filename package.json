@@ -1,5 +1,5 @@
 {
-  "name": "ecc",
+  "name": "ecdh",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,21 +11,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/josudoey/ecc.git"
+    "url": "git+https://github.com/josudoey/ecdh.git"
   },
   "author": "Joey Fang",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/josudoey/ecc/issues"
   },
-  "homepage": "https://github.com/josudoey/ecc#readme",
+  "homepage": "https://github.com/josudoey/ecdh#readme",
   "devDependencies": {
-    "big.js": "^5.2.2",
-    "bignumber.js": "^8.1.1",
-    "bn.js": "^4.11.8",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
     "nyc": "^13.3.0"
+  },
+  "dependencies": {
+    "bignumber.js": "^8.1.1"
   }
 }
