@@ -1,7 +1,7 @@
 
 /* eslint-env mocha */
 const assert = require('assert')
-const FieldElemet = require('../lib/field-element')
+const FieldElemet = require('../secp256k1/field-element')
 describe('field element', function () {
   it('init', function () {
     const zero = FieldElemet('0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f')
