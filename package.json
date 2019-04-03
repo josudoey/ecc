@@ -16,7 +16,7 @@
   "author": "Joey Fang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/josudoey/ecc/issues"
+    "url": "https://github.com/josudoey/ecdh/issues"
   },
   "homepage": "https://github.com/josudoey/ecdh#readme",
   "devDependencies": {
