@@ -6,11 +6,11 @@ for (let i = 0; i < 256; i++) {
   mTable[i] = new Point(gTable[i].x, gTable[i].y)
 }
 
-const bitIsTrue = function (hex, offset) {
-  const byteIndex = parseInt(offset / 8) + 1
+const bitIsTrue = function (hex, bitIndex) {
+  const byteIndex = parseInt(bitIndex / 8) + 1
   const byte = parseInt(hex.substr(byteIndex * -2, 2), 16)
-  const bitIndex = offset % 8
-  return !!(1 << bitIndex & byte)
+  const offset = bitIndex % 8
+  return !!(1 << offset & byte)
 }
 
 exports = module.exports = function (coefficient) {

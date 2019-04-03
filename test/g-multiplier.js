@@ -40,4 +40,16 @@ describe('g-multiplier', function () {
     assert.strictEqual(p.x.toString(), '0x9577ff57c8234558f293df502ca4f09cbc65a6572c842b39b366f21717945116')
     assert.strictEqual(p.y.toString(), '0x10b49c67fa9365ad7b90dab070be339a1daf9052373ec30ffae4f72d5e66d053')
   })
+
+  it('(N-1) * G', function () {
+    const p = G('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140')
+    assert.strictEqual(p.x.toString(), '0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798')
+    assert.strictEqual(p.y.toString(), '0xb7c52588d95c3b9aa25b0403f1eef75702e84bb7597aabe663b82f6f04ef2777')
+  }).timeout(10000)
+
+  it('N * G', function () {
+    const p = G('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141')
+    assert.strictEqual(p.x.toString(), 'NaN')
+    assert.strictEqual(p.y.toString(), 'NaN')
+  }).timeout(10000)
 })
