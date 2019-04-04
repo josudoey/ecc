@@ -1,5 +1,13 @@
 const BigNumber = require('bignumber.js')
 const FieldElemet = require('./field-element')
+const G = require('./g-multiplier')
+
+const bitIsTrue = function (hex, bitIndex) {
+  const byteIndex = parseInt(bitIndex / 8) + 1
+  const byte = parseInt(hex.substr(byteIndex * -2, 2), 16)
+  const offset = bitIndex % 8
+  return !!(1 << offset & byte)
+}
 
 class Point {
   constructor (x, y) {
@@ -39,6 +47,19 @@ class Point {
     const x = s.pow(2).sub(this.x.mul(2))
     const y = s.mul(this.x.sub(x)).sub(this.y)
     return new Point(x, y)
+  }
+
+  mul (coefficient) {
+    const hex = FieldElemet(coefficient).hex()
+    let now = this
+    let result = new Point(NaN, NaN)
+    for (let i = 0; i < 256; i++) {
+      if (bitIsTrue(hex, i)) {
+        result = result.add(now)
+      }
+      now = now.add(now)
+    }
+    return result
   }
 }
 

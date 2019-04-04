@@ -43,6 +43,11 @@ class FieldElemnt {
   }
 
   div (other) {
+    // Fermat's Little Theorem
+    // #when mod P
+    // n^(p-1) = 1
+    // 1/n = n^(-1)
+    // n^(-1) * 1 = n^(-1) * n^(p-1) = n^(p-2)
     const inv = new BigNumber(other.toString()).pow(P.minus(2), P)
     return this.mul(new FieldElemnt(inv))
   }

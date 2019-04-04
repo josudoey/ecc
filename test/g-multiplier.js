@@ -52,4 +52,10 @@ describe('g-multiplier', function () {
     assert.strictEqual(p.x.toString(), 'NaN')
     assert.strictEqual(p.y.toString(), 'NaN')
   }).timeout(10000)
+
+  it('(N+1) * G', function () {
+    const p = G('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364142')
+    assert.strictEqual(p.x.toString(), '0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798')
+    assert.strictEqual(p.y.toString(), '0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8')
+  }).timeout(10000)
 })
