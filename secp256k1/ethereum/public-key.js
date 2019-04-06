@@ -23,6 +23,7 @@ class PublicKey {
   }
 
   toAddress () {
+    // ref https://github.com/ethereumjs/ethereumjs-util/blob/master/src/account.ts#L142
     const address = keccak256(Buffer.from(this.toSec(false), 'hex').slice(1)).slice(-20)
     return `0x${address.toString('hex')}`
   }

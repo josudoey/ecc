@@ -41,6 +41,7 @@ class PublicKey {
   }
 
   toAddress (testnet, compressed = true) {
+    // ref https://github.com/bitcoinjs/bs58check/blob/master/base.js#L8
     const h160 = hash160(Buffer.from(this.toSec(compressed), 'hex'))
     const prefix = (testnet) ? Buffer.from('6f', 'hex') : Buffer.from('00', 'hex')
     const concat = Buffer.concat([prefix, h160])
