@@ -1,7 +1,3 @@
-const BigNumber = require('bignumber.js')
-const G = require('../g-multiplier')
-const N = new BigNumber('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141')
-const crypto = require('crypto')
 const createKeccakHash = require('keccak')
 
 const keccak256 = function (data) {

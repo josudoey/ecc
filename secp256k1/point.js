@@ -1,6 +1,4 @@
-const BigNumber = require('bignumber.js')
 const FieldElemet = require('./field-element')
-const G = require('./g-multiplier')
 
 const bitIsTrue = function (hex, bitIndex) {
   const byteIndex = parseInt(bitIndex / 8) + 1

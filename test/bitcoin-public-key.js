@@ -1,16 +1,8 @@
 
 /* eslint-env mocha */
 const assert = require('assert')
-const PrivateKey = require('../secp256k1/bitcoin/private-key')
 const PublicKey = require('../secp256k1/bitcoin/public-key')
 const G = require('../secp256k1/g-multiplier')
-const EC = require('elliptic').ec
-const ec = new EC('secp256k1')
-
-const hex = function (n) {
-  const hex = `0000000000000000000000000000000000000000000000000000000000000000${n.toString(16)}`.slice(-64)
-  return `${hex}`
-}
 
 describe('public-key', function () {
   it('sec for 2G ', function () {
