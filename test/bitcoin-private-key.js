@@ -16,26 +16,9 @@ describe('private-key', function () {
   const key = new PrivateKey('0x' + s)
 
   it('check public key', function () {
-    assert.strictEqual(hex(keyPair.getPublic().getX().toString(16)), key.point.x.hex())
-    assert.strictEqual(hex(keyPair.getPublic().getY().toString(16)), key.point.y.hex())
+    assert.strictEqual(key.point.x.hex(), hex(keyPair.getPublic().getX().toString(16)))
+    assert.strictEqual(key.point.y.hex(), hex(keyPair.getPublic().getY().toString(16)))
   })
-
-  it('ecRecover', function () {
-    const msgHash = '000000000000000000000000000000000000000000000000000000000000000f'
-    const expectSignature = keyPair.sign(msgHash)
-    const rHex = '0x' + expectSignature.r.toString(16)
-
-    const r = key.ecRecover(
-      '0x' + msgHash,
-      '0x' + expectSignature.r.toString(16),
-      '0x' + expectSignature.s.toString(16)
-    )
-    assert.strictEqual(r, rHex)
-    assert(keyPair.verify(msgHash, {
-      r: expectSignature.r.toString(16),
-      s: expectSignature.s.toString(16)
-    }))
-  }).timeout(10000)
 
   it('sign', function () {
     const msgHash = '000000000000000000000000000000000000000000000000000000000000000f'

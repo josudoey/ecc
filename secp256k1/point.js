@@ -13,8 +13,6 @@ class Point {
   constructor (x, y) {
     this.x = FieldElemet(x)
     this.y = FieldElemet(y)
-    this.a = 0
-    this.b = 7
   }
 
   eq (other) {

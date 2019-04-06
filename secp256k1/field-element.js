@@ -6,10 +6,10 @@ class FieldElemnt {
   constructor (i) {
     let num = new BigNumber(i.toString()).modulo(P)
     if (!num.gt(0)) {
-      this.num = num.plus(P).modulo(P)
+      this.number = num.plus(P).modulo(P)
       return
     }
-    this.num = num
+    this.number = num
   }
 
   get P () {
@@ -17,28 +17,28 @@ class FieldElemnt {
   }
 
   hex () {
-    return `0000000000000000000000000000000000000000000000000000000000000000${this.num.toString(16)}`.slice(-64)
+    return `0000000000000000000000000000000000000000000000000000000000000000${this.number.toString(16)}`.slice(-64)
   }
 
   eq (other) {
-    if (isNaN(this.num) && isNaN(other.toString())) {
+    if (isNaN(this.number) && isNaN(other.toString())) {
       return true
     }
-    return this.num.isEqualTo(other.toString())
+    return this.number.isEqualTo(other.toString())
   }
 
   add (other) {
-    const num = this.num.plus(other.toString())
+    const num = this.number.plus(other.toString())
     return new FieldElemnt(num)
   }
 
   sub (other) {
-    const num = this.num.minus(other.toString())
+    const num = this.number.minus(other.toString())
     return new FieldElemnt(num)
   }
 
   mul (other) {
-    const num = this.num.times(other.toString())
+    const num = this.number.times(other.toString())
     return new FieldElemnt(num)
   }
 
@@ -53,12 +53,12 @@ class FieldElemnt {
   }
 
   pow (n) {
-    const num = this.num.pow(n, P)
+    const num = this.number.pow(n, P)
     return new FieldElemnt(num)
   }
 
   toString () {
-    if (isNaN(this.num)) {
+    if (isNaN(this.number)) {
       return 'NaN'
     }
     return `0x${this.hex()}`
