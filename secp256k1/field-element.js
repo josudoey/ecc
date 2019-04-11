@@ -1,6 +1,7 @@
 const BigNumber = require('bignumber.js')
 
 const P = new BigNumber('0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16)
+const powForSqrt = P.plus(1).div(4)
 
 class FieldElemnt {
   constructor (i) {
@@ -25,6 +26,10 @@ class FieldElemnt {
       return true
     }
     return this.number.isEqualTo(other.toString())
+  }
+
+  isOdd () {
+    return this.number.modulo(2).eq(1)
   }
 
   add (other) {
@@ -52,9 +57,26 @@ class FieldElemnt {
     return this.mul(new FieldElemnt(inv))
   }
 
+  complement () {
+    const num = P.minus(this.number)
+    return new FieldElemnt(num)
+  }
+
   pow (n) {
     const num = this.number.pow(n, P)
     return new FieldElemnt(num)
+  }
+
+  sqrt () {
+    // when n is mod p and p is prime
+    // n = n^p
+    // n^2 = n^(p+1)
+    // n*n = n^((p+1)/2) * n^((p+1)/2)
+    // n = n^((p+1)/2)
+    // n^(1/2) * n^(1/2) = n^((p+1)/4) * n^((p+1)/4)
+    // n^(1/2) = n^((p+1)/4)
+    // thus powForSqrt = (p+1)/4
+    return this.pow(powForSqrt)
   }
 
   toString () {

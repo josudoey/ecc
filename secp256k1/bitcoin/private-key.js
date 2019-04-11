@@ -19,14 +19,17 @@ class PrivateKey {
   sign (msgHash) {
     const z = new BigNumber(msgHash)
     const k = new BigNumber('0x' + crypto.randomBytes(32).toString('hex'))
-    const r = new BigNumber(G(k).x.toString())
+    const kG = G(k)
+    const r = new BigNumber(kG.x.toString())
     // kG = uG + vP = uG + zeG
     // r = kG.x = (uG + vP).x
     // s = (z+re) / k
     const s = r.times(this.secret).plus(z).times(k.pow(N.minus(2), N)).modulo(N)
+    const recoveryParam = parseInt(kG.y.hex().slice(-2), 16) % 2
     return {
       r: hex(r),
-      s: hex(s)
+      s: hex(s),
+      recoveryParam: recoveryParam
     }
   }
 
