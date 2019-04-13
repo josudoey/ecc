@@ -16,6 +16,16 @@ class PrivateKey {
     this.publicKey = new PublicKey(this.point)
   }
 
+  getPublicKey () {
+    return Buffer.from(this.publicKey.toSec(false), 'hex')
+  }
+
+  ecdhSecret (otherPublicKey) {
+    const otherKey = PublicKey.fromSec(otherPublicKey.toString('hex'))
+    const secret = otherKey.point.mul(this.secret).x
+    return secret.hex()
+  }
+
   sign (msgHash) {
     const z = new BigNumber(msgHash)
     const k = new BigNumber('0x' + crypto.randomBytes(32).toString('hex'))

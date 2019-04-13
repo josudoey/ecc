@@ -147,6 +147,15 @@ describe('public-key', function () {
     )
   }).timeout(20000)
 
+  it('ecdhSecret', function () {
+    const alice = new PrivateKey('0xf000000000000000000000000000000000000000000000000000000000000000')
+    const bob = crypto.createECDH('secp256k1')
+    bob.generateKeys()
+    const aliceSecret = alice.ecdhSecret(bob.getPublicKey())
+    const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex')
+    assert.strictEqual(aliceSecret, bobSecret)
+  }).timeout(20000)
+
   it('p2pkh address for 1G', function () {
     const p = G(1)
     const key = new PublicKey(p)
