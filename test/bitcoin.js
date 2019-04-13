@@ -1,5 +1,6 @@
 
 /* eslint-env mocha */
+const crypto = require('crypto')
 const assert = require('assert')
 const PublicKey = require('../secp256k1/bitcoin/public-key')
 const PrivateKey = require('../secp256k1/bitcoin/private-key')
