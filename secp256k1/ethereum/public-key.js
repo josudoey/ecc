@@ -1,25 +1,15 @@
+const BasePublicKey = require('../public-key')
+
 const createKeccakHash = require('keccak')
 
 const keccak256 = function (data) {
   return createKeccakHash('keccak256').update(data).digest()
 }
 
-class PublicKey {
-  constructor (point) {
-    this.point = point
-  }
-
-  toSec (compressed = true) {
-    if (!compressed) {
-      return `04${this.point.x.hex()}${this.point.y.hex()}`
-    }
-
-    const odd = this.point.y.number.modulo(2).eq(1)
-    if (odd) {
-      return `03${this.point.x.hex()}`
-    }
-
-    return `02${this.point.x.hex()}`
+class PublicKey extends BasePublicKey {
+  static from (data) {
+    const p = BasePublicKey.from(data)
+    return new PublicKey(p.x, p.y)
   }
 
   toAddress () {
