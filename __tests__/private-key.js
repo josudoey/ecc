@@ -6,6 +6,13 @@ const EC = require('elliptic').ec
 const ec = new EC('secp256k1')
 
 describe('private-key', function () {
+  describe('fromPEM&toPEM', function () {
+    const pem = crypto.generateKeyPairSync('ec', { namedCurve: 'secp256k1' }).privateKey.export({ type: 'sec1', format: 'pem' })
+    it('matched', function () {
+      assert.strictEqual(PrivateKey.fromPEM(pem).toPEM(), pem)
+    })
+  })
+
   it('check public key', function () {
     const privateKeyHex = 'f000000000000000000000000000000000000000000000000000000000000000'
     const key = new PrivateKey(privateKeyHex)
