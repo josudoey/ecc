@@ -28,7 +28,7 @@ describe('private-key', function () {
     const p = ec.recoverPubKey(msgHash, signature, signature.recoveryParam)
     assert.strictEqual(p.x.toString('hex', 64), '3bc6bc6446bf520136358eb0958dc4aa9e733164dd2d62e151f946107427bacc')
     assert.strictEqual(p.y.toString('hex', 64), '8e305cc07176c305cdb62ee226d6c02bd71b75a5228beb4714c33fd5ead6fda6')
-  }).timeout(10000)
+  })
 
   it('ecdhSecret', function () {
     const alice = new PrivateKey('f000000000000000000000000000000000000000000000000000000000000000')
@@ -37,5 +37,5 @@ describe('private-key', function () {
     const aliceSecret = alice.ecdhSecret(bob.getPublicKey())
     const bobSecret = bob.computeSecret(alice.publicKey.toBuffer(), null, 'hex')
     assert.strictEqual(aliceSecret, bobSecret)
-  }).timeout(20000)
+  })
 })

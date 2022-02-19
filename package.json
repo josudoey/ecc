@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require intelli-espower-loader",
-    "dev:test": "nodemon --ext js --exec 'mocha $@'",
-    "cover": "nyc --reporter=lcov --reporter=text mocha --require intelli-espower-loader",
+    "test": "jest",
+    "dev:test": "nodemon --ext js --exec 'jest $@'",
+    "cover": "jest --reporters=default",
     "dev:cover": "nodemon --ext js --exec 'nyc --reporter=lcov --reporter=text mocha --require intelli-espower-loader'"
   },
   "repository": {
@@ -20,19 +20,16 @@
   },
   "homepage": "https://github.com/josudoey/ecdh#readme",
   "devDependencies": {
-    "bolt11": "^1.2.4",
-    "intelli-espower-loader": "^1.0.1",
-    "mocha": "^6.0.2",
-    "nodemon": "^1.18.10",
-    "nyc": "^13.3.0",
+    "jest": "^27.5.1",
+    "nodemon": "^1.19.4",
     "power-assert": "^1.6.1",
-    "secp256k1": "^3.6.2"
+    "secp256k1": "^3.8.0"
   },
   "dependencies": {
     "bignumber.js": "^8.1.1",
-    "bn.js": "^4.11.8",
+    "bn.js": "^4.12.0",
     "bs58": "^4.0.1",
     "bs58check": "^2.1.2",
-    "keccak": "^2.0.0"
+    "keccak": "^2.1.0"
   }
 }

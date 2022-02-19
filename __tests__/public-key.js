@@ -36,7 +36,7 @@ describe('public-key', function () {
     const g2 = g.mul(2)
     assert.strictEqual(g2.x.toString('hex', 64), 'c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5')
     assert.strictEqual(g2.y.toString('hex', 64), '1ae168fea63dc339a3c58419466ceaeef7f632653266d0e1236431a950cfe52a')
-  }).timeout(10000)
+  })
 
   it('G', function () {
     const g1 = PublicKey.G(1)
@@ -78,19 +78,19 @@ describe('public-key', function () {
     const p = PublicKey.G('fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140')
     assert.strictEqual(p.x.toString('hex', 64), '79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798')
     assert.strictEqual(p.y.toString('hex', 64), 'b7c52588d95c3b9aa25b0403f1eef75702e84bb7597aabe663b82f6f04ef2777')
-  }).timeout(10000)
+  })
 
   it('N * G', function () {
     const p = PublicKey.G('fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141')
     assert.strictEqual(p.x.toString('hex', 64), '')
     assert.strictEqual(p.y.toString('hex', 64), '')
-  }).timeout(10000)
+  })
 
   it('(N+1) * G', function () {
     const p = PublicKey.G('fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364142')
     assert.strictEqual(p.x.toString('hex', 64), '79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798')
     assert.strictEqual(p.y.toString('hex', 64), '483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8')
-  }).timeout(10000)
+  })
 
   it('verify', function () {
     const msgHash = '000000000000000000000000000000000000000000000000000000000000000f'
@@ -108,7 +108,7 @@ describe('public-key', function () {
     assert(keyPair.verify(msgHash, signature))
     const sig = keyPair.sign(msgHash)
     assert(key.verify(msgHash, sig.r.toString('hex', 32), sig.s.toString('hex', 32)))
-  }).timeout(40000)
+  })
 
   it('recover', function () {
     const msgHash = '000000000000000000000000000000000000000000000000000000000000000f'
@@ -130,5 +130,5 @@ describe('public-key', function () {
       PublicKey.recover(msgHash, sig.r.toString('hex', 64), sig.s.toString('hex', 64), sig.recoveryParam).toSec(false),
       '043bc6bc6446bf520136358eb0958dc4aa9e733164dd2d62e151f946107427bacc8e305cc07176c305cdb62ee226d6c02bd71b75a5228beb4714c33fd5ead6fda6'
     )
-  }).timeout(40000)
+  })
 })
