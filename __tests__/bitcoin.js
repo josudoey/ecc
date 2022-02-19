@@ -1,5 +1,5 @@
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const assert = require('assert')
 const PublicKey = require('../secp256k1/bitcoin/public-key')
 

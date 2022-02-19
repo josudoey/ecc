@@ -1,9 +1,8 @@
 const BasePublicKey = require('../public-key')
-
-const createKeccakHash = require('keccak')
+const sha3 = require('js-sha3')
 
 const keccak256 = function (data) {
-  return createKeccakHash('keccak256').update(data).digest()
+  return Buffer.from(sha3.keccak256.create().update(data).digest())
 }
 
 class PublicKey extends BasePublicKey {

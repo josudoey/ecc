@@ -20,8 +20,15 @@
   },
   "homepage": "https://github.com/josudoey/ecdh#readme",
   "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "esprima": "^4.0.1",
     "jest": "^27.5.1",
-    "nodemon": "^1.19.4",
+    "js-sha3": "^0.8.0",
+    "nodemon": "^2.0.15",
     "power-assert": "^1.6.1",
     "secp256k1": "^3.8.0"
   },
