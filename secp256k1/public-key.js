@@ -1,4 +1,5 @@
 const BN = require('bn.js')
+const Ber = require('asn1').Ber
 const k256 = BN.red('k256')
 const two = new BN(2).toRed(k256)
 const three = new BN(3).toRed(k256)
@@ -22,6 +23,37 @@ class PublicKey {
   constructor (bnX, bnY) {
     this.x = new BN(bnX, 'hex')
     this.y = new BN(bnY, 'hex')
+  }
+
+  static fromPEM (pem) {
+    const buffer = Buffer.from(pem.split('\n').slice(1, -1).join(''), 'base64')
+
+    // see https://datatracker.ietf.org/doc/html/rfc5915#section-3
+    const reader = new Ber.Reader(buffer)
+    reader.readSequence()
+    if (reader.peek() !== Ber.Integer) {
+      return
+    }
+    reader.readInt(Ber.Integer) // version
+    reader.readString(Ber.OctetString, true)
+
+    reader.readSequence()
+    if (reader.peek() !== Ber.OID) {
+      throw new Error('invalid pem format')
+    }
+    // see https://oid-info.com/get/1.3.132.0.10
+    reader.readOID() // 1.3.132.0.10 (ansip256k1)
+    reader.readSequence()
+    if (reader.peek() !== Ber.BitString) {
+      throw new Error('invalid pem format')
+    }
+
+    const publicKeyString = reader.readString(Ber.BitString, true)
+    const publicKey = PublicKey.from(
+      publicKeyString.slice(1)
+    )
+
+    return publicKey
   }
 
   isNaN () {
