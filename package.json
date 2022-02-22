@@ -4,19 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest ----collect-coverage",
+    "test": "jest ---collect-coverage",
     "dev:test": "nodemon --ext js --exec 'jest $@'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/josudoey/ecdh.git"
+    "url": "git+https://github.com/josudoey/ecc.git"
   },
   "author": "Joey Fang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/josudoey/ecdh/issues"
+    "url": "https://github.com/josudoey/ecc/issues"
   },
-  "homepage": "https://github.com/josudoey/ecdh#readme",
+  "homepage": "https://github.com/josudoey/ecc#readme",
   "devDependencies": {
     "eslint": "^8.6.0",
     "eslint-config-standard": "^16.0.3",

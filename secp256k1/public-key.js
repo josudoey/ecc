@@ -126,6 +126,7 @@ class PublicKey {
   }
 
   toSec (compressed = true) {
+    // see https://www.secg.org/sec1-v2.pdf
     if (!compressed) {
       return `04${this.x.toString('hex', 64)}${this.y.toString('hex', 64)}`
     }
