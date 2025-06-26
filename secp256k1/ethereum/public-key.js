@@ -13,12 +13,12 @@ class PublicKey extends BasePublicKey {
 
   toAddress () {
     // ref https://github.com/ethereumjs/ethereumjs-util/blob/master/src/account.ts#L142
-    const address = keccak256(Buffer.from(this.toSec(false), 'hex').slice(1)).slice(-20)
+    const address = keccak256(Buffer.from(this.toSec(false), 'hex').subarray(1)).subarray(-20)
     return `0x${address.toString('hex')}`
   }
 
   toChecksumAddress () {
-    const address = keccak256(Buffer.from(this.toSec(false), 'hex').slice(1)).slice(-20).toString('hex')
+    const address = keccak256(Buffer.from(this.toSec(false), 'hex').subarray(1)).subarray(-20).toString('hex')
     const hash = keccak256(address).toString('hex')
     let ret = '0x'
 
