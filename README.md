@@ -1,159 +1,71 @@
-# ECC (Elliptic Curve Cryptography)
+# ECC 實作範例（secp256k1）
 
-A JavaScript implementation of secp256k1 elliptic curve cryptography, providing functionality for Bitcoin and Ethereum cryptographic operations.
+本專案旨在幫助理解橢圓曲線加密（Elliptic Curve Cryptography, ECC）的實作，以常見的 secp256k1 曲線為例，這也是比特幣與以太坊等區塊鏈常用的密碼學基礎。
 
-## Overview
+## 目標
 
-This library implements the secp256k1 elliptic curve, which is used in Bitcoin, Ethereum, and many other cryptocurrencies. It provides functionality for:
+- 了解 ECC 的基本原理與運算
+- 實作私鑰、公鑰、簽章與驗證
+- 學習比特幣、以太坊地址的產生方式
+- 透過單元測試驗證每個步驟
 
-- Private and public key generation and management
-- Signing and verification of messages
-- Key recovery from signatures
-- Bitcoin address generation
-- Ethereum address generation
-- ECDH (Elliptic Curve Diffie-Hellman) key exchange
-- DER encoding/decoding of signatures
+## 專案結構
 
-## Installation
-
-```bash
-npm install
-# or
-pnpm install
+```
+secp256k1/
+  ├── public-key.js         # 公鑰運算與驗證
+  ├── private-key.js        # 私鑰產生、簽章、ECDH
+  ├── signature.js          # DER 格式簽章編解碼
+  ├── bitcoin/public-key.js # 比特幣地址產生
+  └── ethereum/public-key.js# 以太坊地址產生
+__tests__/
+  ├── public-key.js         # 公鑰相關測試
+  ├── private-key.js        # 私鑰與簽章測試
+  ├── bitcoin.js            # 比特幣地址測試
+  └── ethereum.js           # 以太坊地址測試
 ```
 
-## Usage
 
-### Private Keys
+## 如何使用
 
-```javascript
-const PrivateKey = require('./secp256k1/private-key');
+### 1. 產生私鑰與公鑰
 
-// Create a new private key
-const privateKeyHex = 'f000000000000000000000000000000000000000000000000000000000000000';
-const privateKey = new PrivateKey(privateKeyHex);
-
-// Get the corresponding public key
-const publicKey = privateKey.getPublic();
-
-// Export to PEM format
-const pem = privateKey.toPEM();
-
-// Import from PEM format
-const importedKey = PrivateKey.fromPEM(pem);
-
-// Sign a message
-const msgHash = crypto.createHash('sha256').update('message').digest().toString('hex');
-const signature = privateKey.sign(msgHash);
-// signature contains r, s, and recoveryParam
-
-// ECDH key exchange
-const otherPublicKey = someOtherPublicKey;
-const sharedSecret = privateKey.ecdhSecret(otherPublicKey);
+```js
+const PrivateKey = require('./secp256k1/private-key')
+const key = new PrivateKey('<private hex>')
+console.log('public key:', key.getPublic().toSec())
 ```
 
-### Public Keys
+### 2. 簽章與驗證
 
-```javascript
-const PublicKey = require('./secp256k1/public-key');
-
-// Create from raw data
-const publicKey = PublicKey.from(publicKeyBuffer);
-
-// Create from generator point
-const generatorPoint = PublicKey.G(1); // 1 * G
-
-// Verify a signature
-const isValid = publicKey.verify(msgHash, signature.r, signature.s);
-
-// Recover public key from signature
-const recoveredKey = PublicKey.recover(msgHash, signature.r, signature.s, signature.recoveryParam);
-
-// Export to SEC format (compressed or uncompressed)
-const secCompressed = publicKey.toSec(true);
-const secUncompressed = publicKey.toSec(false);
-
-// Convert to buffer
-const buffer = publicKey.toBuffer();
+```js
+const msgHash = '訊息雜湊hex'
+const signature = key.sign(msgHash)
+const PublicKey = require('./secp256k1/public-key')
+const pub = key.getPublic()
+console.log('驗證:', pub.verify(msgHash, signature.r, signature.s))
 ```
 
-### Bitcoin Addresses
+### 3. 比特幣/以太坊地址產生
 
-```javascript
-const BitcoinPublicKey = require('./secp256k1/bitcoin/public-key');
-
-// Create a Bitcoin public key
-const bitcoinKey = BitcoinPublicKey.from(publicKeyBuffer);
-
-// Generate a mainnet address
-const mainnetAddress = bitcoinKey.toAddress(false);
-
-// Generate a testnet address
-const testnetAddress = bitcoinKey.toAddress(true);
+```js
+const BTCKey = require('./secp256k1/bitcoin/public-key')
+const ETHKey = require('./secp256k1/ethereum/public-key')
+const btcPub = BTCKey.from(pub)
+console.log('BTC 地址:', btcPub.toAddress())
+const ethPub = ETHKey.from(pub)
+console.log('ETH 地址:', ethPub.toAddress())
 ```
 
-### Ethereum Addresses
+## 學習重點
 
-```javascript
-const EthereumPublicKey = require('./secp256k1/ethereum/public-key');
+- 橢圓曲線純量加法、橢圓曲線純量乘法
+- 私鑰、公鑰、簽章、驗證的數學原理
+- 比特幣、以太坊地址的產生流程
+- ECDH 共識密鑰產生
 
-// Create an Ethereum public key
-const ethereumKey = EthereumPublicKey.from(publicKeyBuffer);
+## 參考資源
 
-// Generate an Ethereum address
-const address = ethereumKey.toAddress();
-
-// Generate a checksum address
-const checksumAddress = ethereumKey.toChecksumAddress();
-```
-
-### Signatures
-
-```javascript
-const Signature = require('./secp256k1/signature');
-
-// Convert signature to DER format
-const derSignature = Signature.toDER(signature);
-
-// Parse DER signature
-const parsedSignature = Signature.fromDER(derBuffer);
-```
-
-## Testing
-
-Run the tests with:
-
-```bash
-npm test
-```
-
-For development with automatic test reloading:
-
-```bash
-npm run dev:test
-```
-
-## Implementation Details
-
-This library implements the secp256k1 elliptic curve from scratch, including:
-
-- Point addition and doubling on the curve
-- Scalar multiplication using the double-and-add algorithm
-- Private key generation and management
-- Public key derivation and verification
-- Signature creation and verification
-- Key recovery from signatures
-- Bitcoin and Ethereum address generation
-
-The implementation follows the standards and specifications for secp256k1, Bitcoin, and Ethereum.
-
-## Dependencies
-
-- **asn1**: For ASN.1 encoding/decoding (used in PEM format)
-- **bn.js**: For big number arithmetic
-- **bs58**: For Base58 encoding/decoding (used in Bitcoin addresses)
-- **js-sha3**: For Keccak-256 hashing (used in Ethereum addresses)
-
-## License
-
-ISC
+- [secp256k1 curve](https://en.bitcoin.it/wiki/Secp256k1)
+- [比特幣開發文件](https://developer.bitcoin.org/devguide/transactions.html#public-key-cryptography)
+- [以太坊黃皮書](https://ethereum.github.io/yellowpaper/paper.pdf)
